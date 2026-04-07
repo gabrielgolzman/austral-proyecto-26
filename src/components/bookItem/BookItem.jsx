@@ -11,7 +11,6 @@ const BookItem = ({
     imageUrl,
     available
 }) => {
-    console.log(styles)
     return <Card className={classNames(
         "mx-3 mb-4",
         styles.card,
