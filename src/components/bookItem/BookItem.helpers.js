@@ -1,0 +1,1 @@
+export const decidePlural = (value) => value === 1 ? "" : "s"
