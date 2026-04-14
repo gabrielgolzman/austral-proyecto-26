@@ -1,4 +1,5 @@
 import BooksContainer from "./components/booksContainer/BooksContainer";
+import NewBook from "./components/newBook/NewBook"
 import { BOOKS } from "./data";
 
 const App = () => {
@@ -9,7 +10,10 @@ const App = () => {
     <>
       <h1>Book champions</h1>
       <p>Bienvenido a la app</p>
-      <BooksContainer books={BOOKS} />
+      <div className="d-flex align-items-center flex-column">
+        <NewBook />
+        <BooksContainer books={BOOKS} />
+      </div>
     </>
   )
 

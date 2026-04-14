@@ -1,4 +1,5 @@
-import { Badge, Card } from "react-bootstrap";
+import { useState } from "react";
+import { Badge, Button, Card } from "react-bootstrap";
 import classNames from "classnames";
 import { decidePlural } from "./BookItem.helpers";
 import styles from "./BookItem.module.css";
@@ -11,6 +12,17 @@ const BookItem = ({
     imageUrl,
     available
 }) => {
+    const [bookTitle, setBookTitle] = useState(title);
+    const [bookAvailable, setBookAvailable] = useState(available)
+
+    const handleChangeAvailability = () => {
+        setBookAvailable((prevBookAvailable) => !prevBookAvailable)
+    }
+    const handleChangeTitle = () => {
+        setBookTitle("¡Título actualizado!");
+        console.log(bookTitle)
+    }
+
     return <Card className={classNames(
         "mx-3 mb-4",
         styles.card,
@@ -23,11 +35,11 @@ const BookItem = ({
                         ? imageUrl
                         : "https://images.pexels.com/photos/35098074/pexels-photo-35098074.jpeg"
                 }
-                alt={title}
+                alt={bookTitle}
             />
         </div>
         <Card.Body>
-            {available ? (
+            {bookAvailable ? (
                 <Badge bg="success" className={styles.badge}>
                     Disponible
                 </Badge>
@@ -36,7 +48,7 @@ const BookItem = ({
                     No disponible
                 </Badge>
             )}
-            <Card.Title className={styles.title}>{title}</Card.Title>
+            <Card.Title className={styles.title}>{bookTitle}</Card.Title>
             <Card.Subtitle className={styles.author}>{author}</Card.Subtitle>
             <div>
                 {rating} estrella{decidePlural(rating)}
@@ -44,6 +56,8 @@ const BookItem = ({
             <p className={styles.pageCount}>
                 {pageCount} página{decidePlural(pageCount)}
             </p>
+            <Button onClick={handleChangeAvailability} variant="success" className="mb-3">Cambiar disponibilidad</Button>
+            <Button onClick={handleChangeTitle}>Actualizar título</Button>
         </Card.Body>
     </Card>
 }
