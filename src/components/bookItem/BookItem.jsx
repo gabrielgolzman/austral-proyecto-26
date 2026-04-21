@@ -12,15 +12,13 @@ const BookItem = ({
     imageUrl,
     available
 }) => {
-    const [bookTitle, setBookTitle] = useState(title);
     const [bookAvailable, setBookAvailable] = useState(available)
 
     const handleChangeAvailability = () => {
         setBookAvailable((prevBookAvailable) => !prevBookAvailable)
     }
-    const handleChangeTitle = () => {
-        setBookTitle("¡Título actualizado!");
-        console.log(bookTitle)
+    const handleSelectBook = () => {
+
     }
 
     return <Card className={classNames(
@@ -35,7 +33,7 @@ const BookItem = ({
                         ? imageUrl
                         : "https://images.pexels.com/photos/35098074/pexels-photo-35098074.jpeg"
                 }
-                alt={bookTitle}
+                alt={title}
             />
         </div>
         <Card.Body>
@@ -48,7 +46,7 @@ const BookItem = ({
                     No disponible
                 </Badge>
             )}
-            <Card.Title className={styles.title}>{bookTitle}</Card.Title>
+            <Card.Title className={styles.title}>{title}</Card.Title>
             <Card.Subtitle className={styles.author}>{author}</Card.Subtitle>
             <div>
                 {rating} estrella{decidePlural(rating)}
@@ -57,7 +55,7 @@ const BookItem = ({
                 {pageCount} página{decidePlural(pageCount)}
             </p>
             <Button onClick={handleChangeAvailability} variant="success" className="mb-3">Cambiar disponibilidad</Button>
-            <Button onClick={handleChangeTitle}>Actualizar título</Button>
+            <Button onClick={handleSelectBook}>Seleccionar libro</Button>
         </Card.Body>
     </Card>
 }

@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Button, Card, Col, Form, Row } from "react-bootstrap";
 import { initialForm } from "./NewBook.data";
 
-const NewBook = () => {
+const NewBook = ({ onAddBook }) => {
     const [form, setForm] = useState(initialForm)
 
 
@@ -22,7 +22,8 @@ const NewBook = () => {
 
     const handleAddBook = (event) => {
         event.preventDefault();
-        console.log(form)
+        onAddBook(form)
+        setForm(initialForm)
     }
 
     return (
@@ -93,7 +94,7 @@ const NewBook = () => {
                         >
                             <Form.Check
                                 type="switch"
-                                value={form.available}
+                                checked={form.available}
                                 onChange={handleChangeAvailable}
                                 id="available"
                                 className="mb-3"

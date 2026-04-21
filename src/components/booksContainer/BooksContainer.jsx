@@ -12,9 +12,12 @@ const BooksContainer = ({ books }) => {
     />)
 
     return (
-        <div className="d-flex justify-content-center flex-wrap">
-            {booksMapped}
-        </div>
+        <>
+            <p>Usted ha seleccionado el libro: <b></b></p>
+            <div className="d-flex justify-content-center flex-wrap">
+                {booksMapped}
+            </div>
+        </>
     );
 
 }
