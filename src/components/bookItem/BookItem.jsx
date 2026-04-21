@@ -10,7 +10,8 @@ const BookItem = ({
     pageCount,
     rating,
     imageUrl,
-    available
+    available,
+    onSelectBook
 }) => {
     const [bookAvailable, setBookAvailable] = useState(available)
 
@@ -18,7 +19,7 @@ const BookItem = ({
         setBookAvailable((prevBookAvailable) => !prevBookAvailable)
     }
     const handleSelectBook = () => {
-
+        onSelectBook(title)
     }
 
     return <Card className={classNames(
