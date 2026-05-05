@@ -2,6 +2,7 @@ import { useState } from "react";
 import BooksContainer from "./components/booksContainer/BooksContainer";
 import NewBook from "./components/newBook/NewBook"
 import { BOOKS } from "./data";
+import Login from "./components/login/Login";
 
 const App = () => {
   const [books, setBooks] = useState(BOOKS);
@@ -21,9 +22,8 @@ const App = () => {
   // JSX
   return (
     <>
-      <h1>Book champions</h1>
-      <p>Bienvenido a la app</p>
       <div className="d-flex align-items-center flex-column">
+        {/* <Login /> */}
         <NewBook onAddBook={handleAddBook} />
         <BooksContainer books={books} />
       </div>

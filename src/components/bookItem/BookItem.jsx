@@ -57,6 +57,7 @@ const BookItem = ({
             </p>
             <Button onClick={handleChangeAvailability} variant="success" className="mb-3">Cambiar disponibilidad</Button>
             <Button onClick={handleSelectBook}>Seleccionar libro</Button>
+            <Button className="ms-2" variant="danger">Eliminar libro</Button>
         </Card.Body>
     </Card>
 }
