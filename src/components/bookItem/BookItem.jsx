@@ -5,21 +5,28 @@ import { decidePlural } from "./BookItem.helpers";
 import styles from "./BookItem.module.css";
 
 const BookItem = ({
+    id,
     title,
     author,
     pageCount,
     rating,
     imageUrl,
     available,
-    onSelectBook
+    onSelectBook,
+    onDelete
 }) => {
     const [bookAvailable, setBookAvailable] = useState(available)
 
     const handleChangeAvailability = () => {
         setBookAvailable((prevBookAvailable) => !prevBookAvailable)
     }
+
     const handleSelectBook = () => {
         onSelectBook(title)
+    }
+
+    const handleDeleteBook = () => {
+        onDelete(id, title)
     }
 
     return <Card className={classNames(
@@ -57,7 +64,7 @@ const BookItem = ({
             </p>
             <Button onClick={handleChangeAvailability} variant="success" className="mb-3">Cambiar disponibilidad</Button>
             <Button onClick={handleSelectBook}>Seleccionar libro</Button>
-            <Button className="ms-2" variant="danger">Eliminar libro</Button>
+            <Button className="ms-2" variant="danger" onClick={handleDeleteBook}>Eliminar libro</Button>
         </Card.Body>
     </Card>
 }

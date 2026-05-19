@@ -25,7 +25,7 @@ const App = () => {
       <div className="d-flex align-items-center flex-column">
         {/* <Login /> */}
         <NewBook onAddBook={handleAddBook} />
-        <BooksContainer books={books} />
+        <BooksContainer books={books} onDelete={handleDeleteBook} />
       </div>
     </>
   )
