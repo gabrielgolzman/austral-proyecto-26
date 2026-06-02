@@ -1,7 +1,7 @@
 import { useState } from "react";
 import BookItem from "../bookItem/BookItem";
 import BookSearch from "../bookSearch/BookSearch";
-import DeleteModal from "../deleteModal/DeleteModal";
+import DeleteModal from "../../shared/deleteModal/DeleteModal";
 import { initialBookToDelete } from "./BooksContainer.data";
 
 const BooksContainer = ({ books, onDelete }) => {

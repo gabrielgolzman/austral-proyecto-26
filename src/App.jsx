@@ -1,31 +1,34 @@
 import { useState } from "react";
-import BooksContainer from "./components/booksContainer/BooksContainer";
-import NewBook from "./components/newBook/NewBook"
+import { BrowserRouter, Navigate, Route, Routes } from "react-router";
+import BooksContainer from "./components/biz/booksContainer/BooksContainer";
+import NewBook from "./components/biz/newBook/NewBook"
 import { BOOKS } from "./data";
-import Login from "./components/login/Login";
+import Login from "./components/auth/login/Login";
+import Dashboard from "./components/biz/dashboard/Dashboard";
+import NotFound from "./components/routes/notFound/NotFound";
+import Protected from "./components/routes/protected/Protected";
 
 const App = () => {
-  const [books, setBooks] = useState(BOOKS);
+  const [isSignedIn, setIsSignedIn] = useState(false);
 
-  const handleAddBook = (book) => {
-    setBooks((prevBooks) => [{
-      ...book,
-      id: Math.max(...prevBooks.map(book => book.id)) + 1
-    }, ...prevBooks])
-  }
-
-  const handleDeleteBook = (id) => {
-    setBooks((prevBooks) =>
-      prevBooks.filter(book => book.id !== id))
+  const handleLogIn = () => {
+    setIsSignedIn(true);
   }
 
   // JSX
   return (
     <>
       <div className="d-flex align-items-center flex-column">
-        {/* <Login /> */}
-        <NewBook onAddBook={handleAddBook} />
-        <BooksContainer books={books} onDelete={handleDeleteBook} />
+        <BrowserRouter>
+          <Routes>
+            <Route path="/" element={<Navigate to="library" replace />} />
+            <Route path="login" element={<Login onLogin={handleLogIn} />} />
+            <Route element={<Protected isSignedIn={isSignedIn} />}>
+              <Route path="library" element={<Dashboard />} />
+            </Route>
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+        </BrowserRouter>
       </div>
     </>
   )
