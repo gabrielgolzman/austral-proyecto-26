@@ -1,11 +1,14 @@
 import { useState } from "react";
+import { useNavigate } from "react-router";
 import BooksContainer from "../booksContainer/BooksContainer"
 import NewBook from "../newBook/NewBook"
 import { BOOKS } from "../../../data";
 import { Button, Col, Row } from "react-bootstrap";
 
-const Dashboard = () => {
+const Dashboard = ({ onLogout }) => {
     const [books, setBooks] = useState(BOOKS);
+
+    const navigate = useNavigate()
 
     const handleAddBook = (book) => {
         setBooks((prevBooks) => [{
@@ -18,12 +21,17 @@ const Dashboard = () => {
         setBooks((prevBooks) =>
             prevBooks.filter(book => book.id !== id))
     }
+
+    const handleLogout = () => {
+        onLogout();
+        navigate("/login");
+    }
     return (
         <>
             <Row className="w-100">
                 <Col md={10}></Col>
                 <Col>
-                    <Button className="mt-2">Cerrar sesión</Button>
+                    <Button className="mt-2" onClick={handleLogout}>Cerrar sesión</Button>
                 </Col>
             </Row>
             <NewBook onAddBook={handleAddBook} />

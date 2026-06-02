@@ -15,6 +15,10 @@ const App = () => {
     setIsSignedIn(true);
   }
 
+  const handleLogOut = () => {
+    setIsSignedIn(false);
+  }
+
   // JSX
   return (
     <>
@@ -24,7 +28,7 @@ const App = () => {
             <Route path="/" element={<Navigate to="library" replace />} />
             <Route path="login" element={<Login onLogin={handleLogIn} />} />
             <Route element={<Protected isSignedIn={isSignedIn} />}>
-              <Route path="library" element={<Dashboard />} />
+              <Route path="library" element={<Dashboard onLogout={handleLogOut} />} />
             </Route>
             <Route path="*" element={<NotFound />} />
           </Routes>
