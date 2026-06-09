@@ -3,8 +3,9 @@ import BookItem from "../bookItem/BookItem";
 import BookSearch from "../bookSearch/BookSearch";
 import DeleteModal from "../../shared/deleteModal/DeleteModal";
 import { initialBookToDelete } from "./BooksContainer.data";
+import { Spinner } from "react-bootstrap";
 
-const BooksContainer = ({ books, onDelete }) => {
+const BooksContainer = ({ books, isLoading, onDelete }) => {
     const [selectedBookTitle, setSelectedBookTilte] = useState("");
     const [bookToDelete, setBookToDelete] = useState(initialBookToDelete)
     const [bookSearch, setBookSearch] = useState("");
@@ -71,8 +72,9 @@ const BooksContainer = ({ books, onDelete }) => {
             }
             <div className="d-flex justify-content-center flex-wrap">
                 {booksMapped.length > 0 ?
-                    booksMapped :
-                    <p>No se encontraron libros.</p>}
+                    booksMapped : isLoading ?
+                        <Spinner /> :
+                        <p>No se encontraron libros.</p>}
             </div>
         </>
     );
