@@ -1,13 +1,16 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 import BooksContainer from "../booksContainer/BooksContainer"
 import NewBook from "../newBook/NewBook"
 import { Button, Col, Row } from "react-bootstrap";
 import { deleteBook } from "./Dashboard.server";
+import { AuthenticationContext } from "../../../services/auth/authenticationContext/AuthenticationContext";
 
-const Dashboard = ({ onLogout }) => {
+const Dashboard = () => {
     const [books, setBooks] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
+
+    const { onLogout } = useContext(AuthenticationContext);
 
     const navigate = useNavigate();
 
@@ -17,7 +20,11 @@ const Dashboard = ({ onLogout }) => {
         // resolved 200 204
         // rejected 400, 401, 403, 404, 405, 500
         setIsLoading(true);
-        fetch('https://localhost:7120/api/book')
+        fetch('https://localhost:7120/api/book', {
+            headers: {
+                "Authorization": `Bearer ${localStorage.getItem("book-champions-token")}`
+            }
+        })
             .then((res) => res.json())
             .then(({ result }) => {
                 setIsLoading(false);
@@ -73,7 +80,7 @@ const Dashboard = ({ onLogout }) => {
     }
 
     const handleLogout = () => {
-        onLogout();
+        onLogout()
         navigate("/login");
     }
 

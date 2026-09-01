@@ -7,6 +7,8 @@ import Login from "./components/auth/login/Login";
 import Dashboard from "./components/biz/dashboard/Dashboard";
 import NotFound from "./components/routes/notFound/NotFound";
 import Protected from "./components/routes/protected/Protected";
+import Register from "./components/auth/register/Register";
+import AuthenticationContextProvider from "./services/auth/authenticationContext/AuthenticationContextProvider";
 
 const App = () => {
   const [isSignedIn, setIsSignedIn] = useState(false);
@@ -26,6 +28,7 @@ const App = () => {
         <BrowserRouter>
           <Routes>
             <Route path="/" element={<Navigate to="library" replace />} />
+            <Route path="register" element={<Register />} />
             <Route path="login" element={<Login onLogin={handleLogIn} />} />
             <Route element={<Protected isSignedIn={isSignedIn} />}>
               <Route path="library" element={<Dashboard onLogout={handleLogOut} />} />

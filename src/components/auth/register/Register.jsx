@@ -1,32 +1,39 @@
-import { useContext, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import { useNavigate } from "react-router";
 import { Button, Card, Col, Form, FormGroup, Row } from "react-bootstrap";
-import { initialLoginErrors, initialLoginState } from "./Login.data";
-import { AuthenticationContext } from "../../../services/auth/authenticationContext/AuthenticationContext";
+import { initialRegisterErrors, initialRegisterState } from "./Register.data";
 
-const Login = () => {
-    const [form, setForm] = useState(initialLoginState);
-    const [errors, setErrors] = useState(initialLoginErrors);
+const Register = () => {
+    const [form, setForm] = useState(initialRegisterState);
+    const [errors, setErrors] = useState(initialRegisterErrors)
 
-    const { onLogin } = useContext(AuthenticationContext);
-
+    const usernameRef = useRef(null);
     const emailRef = useRef(null);
     const passwordRef = useRef(null);
 
     const navigate = useNavigate();
 
     const handleChangeInput = (event, target) => {
-        if (errors.email)
+        if (errors[target])
             setErrors(prevErrors =>
-                ({ ...prevErrors, email: false }))
+                ({ ...prevErrors, [target]: false }))
         setForm(prevForm => ({
             ...prevForm,
             [target]: event.target.value
         }))
     }
 
-    const handleLogin = (event) => {
+    const handleRegister = (event) => {
         event.preventDefault();
+
+        if (form.username.length <= 0) {
+            usernameRef.current?.focus();
+            setErrors(prevErrors => ({
+                ...prevErrors,
+                username: true
+            }))
+            return;
+        }
 
         if (form.email.length <= 0) {
             emailRef.current?.focus();
@@ -44,7 +51,8 @@ const Login = () => {
             }))
             return;
         }
-        fetch("https://localhost:7120/api/Authentication/login", {
+
+        fetch("https://localhost:7120/api/Authentication/register", {
             headers: {
                 "Content-Type": "application/json",
                 "Accept": "application/json"
@@ -53,10 +61,10 @@ const Login = () => {
             body: JSON.stringify(form)
         })
             .then((res) => res.json())
-            .then(({ token }) => {
-                onLogin(token)
-                navigate("/library")
+            .then(() => {
+                navigate("/login")
             })
+            .catch()
 
     }
 
@@ -66,7 +74,18 @@ const Login = () => {
                 <Row className="mb-2">
                     <h5>¡Bienvenidos a Books Champion!</h5>
                 </Row>
-                <Form onSubmit={handleLogin} >
+                <Form onSubmit={handleRegister} >
+                    <FormGroup className="mb-4">
+                        <Form.Control
+                            ref={usernameRef}
+                            type="text"
+                            className={errors.username ? "border border-danger" : ""}
+                            placeholder="Ingresar nombre de usuario"
+                            onChange={(event) => handleChangeInput(event, "username")}
+                            value={form.username} />
+                        {errors.username &&
+                            <p className="text-danger">Por favor complete el nombre de usuario</p>}
+                    </FormGroup>
                     <FormGroup className="mb-4">
                         <Form.Control
                             ref={emailRef}
@@ -91,13 +110,13 @@ const Login = () => {
                     </FormGroup>
                     <Row>
                         <Col>
-                            <Button onClick={() => navigate("/register")} variant="secondary">
-                                Registrarse
+                            <Button onClick={() => navigate("/login")} variant="secondary">
+                                Iniciar sesión
                             </Button>
                         </Col>
                         <Col md={6} className="d-flex justify-content-end">
                             <Button variant="primary" type="submit">
-                                Iniciar sesión
+                                Registrarse
                             </Button>
                         </Col>
                     </Row>
@@ -108,4 +127,4 @@ const Login = () => {
 };
 
 
-export default Login;
+export default Register;
